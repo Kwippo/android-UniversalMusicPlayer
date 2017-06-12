@@ -28,7 +28,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.MediaRouteButton;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +41,7 @@ import com.google.android.gms.cast.framework.CastStateListener;
 import com.google.android.gms.cast.framework.IntroductoryOverlay;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.kwippit.sdk.gallery.SimpleGalleryActivity;
 
 /**
  * Abstract activity with toolbar, navigation drawer and cast support. Needs to be extended by
@@ -101,6 +101,9 @@ public abstract class ActionBarCastActivity extends AppCompatActivity {
                         break;
                     case R.id.navigation_playlists:
                         activityClass = PlaceholderActivity.class;
+                        break;
+                    case R.id.navigation_kwippits:
+                        activityClass = SimpleGalleryActivity.class;
                         break;
                 }
                 if (activityClass != null) {

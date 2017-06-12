@@ -18,13 +18,17 @@ package com.example.android.uamp.ui;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.media.MediaBrowserCompat;
 import android.text.TextUtils;
 
 import com.example.android.uamp.R;
 import com.example.android.uamp.utils.LogHelper;
+import com.kwippit.sdk.KwippitApplication;
+import com.kwippit.sdk.analytics.NullAnalyticsLogger;
 
 /**
  * Main activity for the music player.
@@ -65,6 +69,19 @@ public class MusicPlayerActivity extends BaseActivity
         // Only check if a full screen player is needed on the first time:
         if (savedInstanceState == null) {
             startFullScreenActivityIfNeeded(getIntent());
+        }
+
+        NullAnalyticsLogger nullAnalyticsLogger = new NullAnalyticsLogger();
+        String apiKey = "cd9f23b6-0c15-4df5-a1f3-2f2c25fdeaba";
+        String secretKey = "28783fbc-5644-4182-a6ac-67045464197e";
+        KwippitApplication.init(getApplicationContext(), "Goolgle Music Player", apiKey, secretKey, nullAnalyticsLogger);
+
+        // point to staging initially - this won't be needed for real world affiliate applications
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String preferredBaseUrl = sp.getString("server_list", null);
+        if (preferredBaseUrl == null)
+        {
+            sp.edit().putString("server_list", "http://staging-api.kwippit.com/v2").commit();
         }
     }
 
