@@ -95,6 +95,7 @@ public abstract class ActionBarCastActivity extends AppCompatActivity {
                     ActionBarCastActivity.this, R.anim.fade_in, R.anim.fade_out).toBundle();
 
                 Class activityClass = null;
+                boolean finishThisAfterStartingNewActivity = true;
                 switch (mItemToOpenWhenDrawerCloses) {
                     case R.id.navigation_allmusic:
                         activityClass = MusicPlayerActivity.class;
@@ -104,11 +105,14 @@ public abstract class ActionBarCastActivity extends AppCompatActivity {
                         break;
                     case R.id.navigation_kwippits:
                         activityClass = SimpleGalleryActivity.class;
+                        finishThisAfterStartingNewActivity = false;
                         break;
                 }
                 if (activityClass != null) {
                     startActivity(new Intent(ActionBarCastActivity.this, activityClass), extras);
-                    finish();
+                    if (finishThisAfterStartingNewActivity) {
+                        finish();
+                    }
                 }
             }
         }
